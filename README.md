@@ -65,8 +65,13 @@ allprojects {
     }
 }
 ```
-2. Add the dependency
-
+2. Add the dependency to your app module:
+```groovy
+dependencies {
+    implementation 'com.github.dashMrl.AutoVM:autovm:v0.0.1'
+    annotationProcessor 'com.github.dashMrl.AutoVM:autovm-processor:v0.0.1'
+}
+```
 
 
 ## Note
