@@ -2,6 +2,8 @@ package com.dashmrl.autovm;
 
 import android.arch.lifecycle.ViewModel;
 
+import com.dashmrl.autovm.repo.BaseRepo;
+
 /**
  * Author       xinliu
  * Date         1/4/18
@@ -10,7 +12,7 @@ import android.arch.lifecycle.ViewModel;
  */
 
 public class MainVM extends ViewModel {
-    @AutoVM
-    public MainVM() {
+    @AutoVM(injectable = true,withType = true)
+    public MainVM(BaseRepo repo) {
     }
 }
