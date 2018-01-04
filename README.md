@@ -45,8 +45,8 @@ public class MainVM_AutoVM extends ViewModelProvider.NewInstanceFactory {
 ```
 
 As you can see,we got a custom subclass of  ViewModelProvider.NewInstanceFactory.
-What's more? The Constructor is annotated with `@Inject` and `getType()` method which returns the MainVM.class
-If you don't need them,just set `injectable` or `withType` to `false`.
+What's more? The Constructor is annotated with `@Inject` and `getType()` method which returns the MainVM.class,
+If you don't need them , just set `injectable` or `withType` to `false`.
 
 3. Use it:
 ```java
