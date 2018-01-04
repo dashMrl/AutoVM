@@ -114,18 +114,16 @@ public class FactoryClass {
             builder.add(TypeName.get(param.asType()).toString()).add(".class");
             if (i < size - 1) {
                 builder.add(",");
-            } else {
-                builder.add(").newInstance(");
             }
         }
+                builder.add(").newInstance(");
         for (int i = 0; i < size; i++) {
             builder.add(paramClasses.get(i).toString());
             if (i < size - 1) {
                 builder.add(",");
-            } else {
-                builder.add(");");
             }
         }
+                builder.add(");");
         builder.indent();
         return builder.build();
     }
