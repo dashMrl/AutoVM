@@ -8,7 +8,7 @@ AutoVM help us with creating Factory for each ViewModel's subclass (non-abstract
 ## How to use
 1. Create your own ViewModel,like this:
 ```java
-public class MainViewModel extends ViewModel{
+public class MainVM extends ViewModel{
     @AutoVM(injectable=true,withType=true)
     public MainViewModel(BaseRepo repo){
 //      ...        
