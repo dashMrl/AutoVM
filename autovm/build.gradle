@@ -6,3 +6,5 @@ dependencies {
 
 sourceCompatibility = rootProject.android.targetCompatibilityVersion
 targetCompatibility = rootProject.android.sourceCompatibilityVersion
+
+apply from: 'maven_push.gradle'

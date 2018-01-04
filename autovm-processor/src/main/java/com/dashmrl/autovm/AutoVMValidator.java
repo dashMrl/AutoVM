@@ -36,7 +36,7 @@ public class AutoVMValidator {
         Set<Modifier> modifiers = enclosingElement.getModifiers();
         for (Modifier modifier : modifiers) {
             if (modifier == Modifier.ABSTRACT || modifier == Modifier.PRIVATE) {
-                logger.error("enclosing element cannot be modified with private or abstract");
+                logger.error(enclosingElement.toString() + " cannot be modified with private or abstract", element);
                 return false;
             }
         }
@@ -56,7 +56,7 @@ public class AutoVMValidator {
             }
         }
         if (!subvm) {
-            logger.error("enclosing element is not the subClass of android.arch.lifecycle.ViewModel", enclosingElement);
+            logger.error(enclosingElement.toString() + " is not the subClass of android.arch.lifecycle.ViewModel", enclosingElement);
             return subvm;
         }
         return true;

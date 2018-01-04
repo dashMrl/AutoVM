@@ -22,7 +22,7 @@ public class MainModule {
     }
 
     @Provides
-    public MainContract.BaseMainPresenter provideMainPresenter(MainPresenterAutoVM factory) {
+    public MainContract.BaseMainPresenter provideMainPresenter(Holder_MainPresenter_AutoVM factory) {
         return ViewModelProviders.of(activity, factory).get(factory.getType());
     }
 

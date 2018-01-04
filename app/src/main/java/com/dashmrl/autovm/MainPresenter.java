@@ -12,7 +12,7 @@ import com.dashmrl.autovm.repo.BaseRepo;
 public class MainPresenter extends MainContract.BaseMainPresenter {
     private BaseRepo repo;
 
-    @AutoVM(injectable = true,withType = true)
+    @AutoVM(injectable = true, withType = true)
     public MainPresenter(BaseRepo repo, BaseRepo repo2) {
         this.repo = repo;
     }

@@ -22,12 +22,12 @@ import javax.lang.model.util.Types;
 
 @AutoService(Processor.class)
 public class AutoVMProcessor extends AbstractProcessor {
-    private Logger logger;
+    static Logger logger;
     private AutoVMValidator validator;
     private Filer filer;
-    private Elements elementUtils;
+    static Elements elementUtils;
     private Map<String, String> options;
-    private Types typeUtils;
+    static Types typeUtils;
     private HashMap<String, FactoryClass> factoryClassHashMap = new HashMap<>();
 
     @Override

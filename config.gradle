@@ -7,10 +7,10 @@ def glide_version = "4.3.0"
 def mockito_version = "2.10.0"
 ext {
     android = [
-            compileSdkVersion         : 26,
+            compileSdkVersion         : 27,
             buildToolsVersion         : '27.0.2',
             minSdkVersion             : 21,
-            targetSdkVersion          : 26,
+            targetSdkVersion          : 27,
             versionCode               : 1,
             versionName               : '0.0.1',
             targetCompatibilityVersion: JavaVersion.VERSION_1_8,

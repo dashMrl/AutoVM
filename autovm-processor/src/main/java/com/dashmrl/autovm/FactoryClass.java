@@ -1,6 +1,7 @@
 package com.dashmrl.autovm;
 
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -11,6 +12,8 @@ import com.squareup.javapoet.TypeVariableName;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
@@ -36,7 +39,7 @@ public class FactoryClass {
     private PackageElement packageElement;
     private TypeElement typeElement;
     private List<VariableElement> paramClasses = new ArrayList<>();
-    private static final String SUFFIX = "AutoVM";
+    private static final String SUFFIX = "_AutoVM";
 
 
     public FactoryClass(PackageElement packageElement, TypeElement typeElement,
@@ -88,9 +91,9 @@ public class FactoryClass {
                                 ClassName.get(Class.class),
                                 TypeVariableName.get("T")),
                         "modelClass")
-                .beginControlFlow("if(modelClass.isAssignableFrom($L.class))", typeElement.getSimpleName())
+                .beginControlFlow("if(modelClass.isAssignableFrom($L.class))", TypeName.get(typeElement.asType()).toString())
                 .beginControlFlow("try")
-                .addStatement(generateCreateStatement())
+                .addCode(generateCreateCode())
                 .nextControlFlow("catch(Exception e)")
                 .addStatement("e.printStackTrace()")
                 .endControlFlow()
@@ -102,26 +105,29 @@ public class FactoryClass {
     }
 
 
-    private String generateCreateStatement() {
-        StringBuilder sb = new StringBuilder("return modelClass.getConstructor(");
+    private CodeBlock generateCreateCode() {
+        CodeBlock.Builder builder = CodeBlock.builder();
+        builder.add("return modelClass.getConstructor(");
         int size = paramClasses.size();
         for (int i = 0; i < size; i++) {
-            String type = paramClasses.get(i).asType().toString();
-            sb.append(type.subSequence(type.lastIndexOf(".") + 1, type.length())).append(".class");
+            VariableElement param = paramClasses.get(i);
+            builder.add(TypeName.get(param.asType()).toString()).add(".class");
             if (i < size - 1) {
-                sb.append(",");
+                builder.add(",");
+            } else {
+                builder.add(").newInstance(");
             }
         }
-        sb.append(").newInstance(");
         for (int i = 0; i < size; i++) {
-            sb.append(paramClasses.get(i).toString());
+            builder.add(paramClasses.get(i).toString());
             if (i < size - 1) {
-                sb.append(",");
+                builder.add(",");
+            } else {
+                builder.add(");");
             }
         }
-        sb.append(")");
-
-        return sb.toString();
+        builder.indent();
+        return builder.build();
     }
 
     private MethodSpec createGetType() {
@@ -132,16 +138,15 @@ public class FactoryClass {
                                 ClassName.get(Class.class),
                                 TypeVariableName.get(typeElement.asType()))
                 )
-                .addStatement("return $L.class", typeElement.getSimpleName())
+                .addStatement("return $L.class", TypeName.get(typeElement.asType()).toString())
                 .build();
 
         return getType;
     }
 
-
     private TypeSpec.Builder creteTypeBuilder() {
         TypeSpec.Builder classBuilder =
-                TypeSpec.classBuilder(typeElement.getSimpleName() + SUFFIX)
+                TypeSpec.classBuilder(getTypeName(typeElement))
                         .addModifiers(Modifier.PUBLIC)
                         .superclass(TypeName.get(elementUtils.getTypeElement(ViewModelProvider_Factory.toString()).asType()));
         for (VariableElement paramClass : paramClasses) {
@@ -150,4 +155,13 @@ public class FactoryClass {
         return classBuilder;
     }
 
+
+    private String getTypeName(Element element) {
+        Element enclosingElement = element.getEnclosingElement();
+        while (enclosingElement != null && enclosingElement.getKind() != ElementKind.PACKAGE) {
+            enclosingElement = enclosingElement.getEnclosingElement();
+        }
+        String origin = element.toString();
+        return origin.replace(enclosingElement.toString(), "").substring(1).replace(".", "_").concat(SUFFIX);
+    }
 }
