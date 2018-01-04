@@ -1,0 +1,11 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation deps.javapoet
+    implementation project(':autovm')
+    compileOnly deps.autoservice
+}
+
+sourceCompatibility = rootProject.android.targetCompatibilityVersion
+targetCompatibility = rootProject.android.sourceCompatibilityVersion

@@ -1,0 +1,82 @@
+def kotlin_version = '1.2.10'
+def anko_version = '0.10.2'
+def support_lib_version = '27.0.2'
+def arch_version = "1.0.0"
+def dagger_version = "2.13"
+def glide_version = "4.3.0"
+def mockito_version = "2.10.0"
+ext {
+    android = [
+            compileSdkVersion         : 26,
+            buildToolsVersion         : '27.0.2',
+            minSdkVersion             : 21,
+            targetSdkVersion          : 26,
+            versionCode               : 1,
+            versionName               : '0.0.1',
+            targetCompatibilityVersion: JavaVersion.VERSION_1_8,
+            sourceCompatibilityVersion: JavaVersion.VERSION_1_8
+    ]
+    deps = [
+            kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version",
+            anko               : "org.jetbrains.anko:anko-commons:$anko_version",
+
+            support_v4         : "com.android.support:support-v4:$support_lib_version",
+            appcompat_v7       : "com.android.support:appcompat-v7:$support_lib_version",
+            design             : "com.android.support:design:$support_lib_version",
+            recyclerview       : "com.android.support:recyclerview-v7:$support_lib_version",
+            cardview           : "com.android.support:cardview-v7:$support_lib_version",
+            palette            : "com.android.support:palette-v7:$support_lib_version",
+            custom_chrome_tab  : "com.android.support:customtabs:$support_lib_version",
+            constraint_layout  : "com.android.support.constraint:constraint-layout:1.0.2",
+
+//            For Lifecycles, LiveData, and ViewModel
+            lifecycle_runtime  : "android.arch.lifecycle:runtime:1.0.3",//no need if exts or j8 used
+            lifecycle_exts     : "android.arch.lifecycle:extensions:$arch_version",
+            lifecycle_j8       : "android.arch.lifecycle:common-java8:$arch_version",
+            lifecycle_reactive : "android.arch.lifecycle:reactivestreams:$arch_version",
+            lifecycle_processor: "android.arch.lifecycle:compiler:$arch_version",//no need if j8 used
+            lifecycle_test     : "android.arch.core:core-testing:$arch_version",
+//            For Room
+            room               : "android.arch.persistence.room:runtime:$arch_version",
+            room_rx            : "android.arch.persistence.room:rxjava2:$arch_version",
+            room_processor     : "android.arch.persistence.room:compiler:$arch_version",
+            room_test          : "android.arch.persistence.room:testing:$arch_version",
+//            For Paging
+            paging             : "android.arch.paging:runtime:1.0.0-alpha3",
+
+//            Dagger2
+            dagger             : "com.google.dagger:dagger:$dagger_version",
+            dagger_processor   : "com.google.dagger:dagger-compiler:$dagger_version",
+            dagger_android     : "com.google.dagger:dagger-android:$dagger_version",
+            dagger_android_s   : "com.google.dagger:dagger-android-support:$dagger_version",
+            dagger_android_p   : "com.google.dagger:dagger-android-processor:$dagger_version",
+
+            sloth              : "com.xiansenliu.sloth:sloth:1.0.3",
+            delegatervadapter  : "com.github.xiansenLiu:DelegateRVAdapter:v1.0.7",
+            pickerview         : "com.contrarywind:Android-PickerView:3.2.7",
+            calendarview       : "com.prolificinteractive:material-calendarview:1.4.3",
+            glide              : "com.github.bumptech.glide:glide:$glide_version",
+            glide_annotation   : "com.github.bumptech.glide:annotations:$glide_version",
+            glide_processor    : "com.github.bumptech.glide:compiler:$glide_version",
+            jsoup              : "org.jsoup:jsoup:1.10.3",
+            gson               : "com.google.code.gson:gson:2.8.2",
+            rxjava             : "io.reactivex.rxjava2:rxjava:2.1.6",
+            rxandroid          : "io.reactivex.rxjava2:rxandroid:2.0.1",
+            okhttp             : "com.squareup.okhttp3:okhttp:3.9.0",
+            logging_interceptor: "com.squareup.okhttp3:logging-interceptor:3.9.0",
+            retrofit           : "com.squareup.retrofit2:retrofit:2.3.0",
+            converter_gson     : "com.squareup.retrofit2:converter-gson:2.3.0",
+            adapter_rxjava     : "com.squareup.retrofit2:adapter-rxjava2:2.3.0",
+
+            javapoet           : "com.squareup:javapoet:1.9.0",
+            autoservice        : "com.google.auto.service:auto-service:1.0-rc4",
+            autoservice_common : "com.google.auto:auto-common:0.9",
+
+            junit              : "junit:junit:4.12",
+            mockito_core       : "org.mockito:mockito-core:$mockito_version",
+            mockito_android    : "org.mockito:mockito-android:$mockito_version",
+            robolectric        : "org.robolectric:robolectric:3.4.2",
+            runner             : "com.android.support.test:runner:1.0.0",
+            espresso           : "com.android.support.test.espresso:espresso-core:3.0.1"
+    ]
+}

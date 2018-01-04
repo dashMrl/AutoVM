@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.android.compileSdkVersion
+    defaultConfig {
+        applicationId "com.dashmrl.autovm"
+        minSdkVersion rootProject.android.minSdkVersion
+        targetSdkVersion rootProject.android.targetSdkVersion
+        versionCode rootProject.android.versionCode
+        versionName rootProject.android.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        targetCompatibility rootProject.android.targetCompatibilityVersion
+        sourceCompatibility rootProject.android.sourceCompatibilityVersion
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation deps.appcompat_v7
+    implementation deps.constraint_layout
+    implementation deps.design
+    api deps.lifecycle_exts
+    api deps.lifecycle_j8
+    api deps.dagger
+    compileOnly project(':autovm')
+    annotationProcessor project(':autovm-processor')
+    annotationProcessor deps.dagger_processor
+    annotationProcessor deps.dagger_android_p
+    testImplementation deps.junit
+    androidTestImplementation deps.runner
+    androidTestImplementation deps.espresso
+}
