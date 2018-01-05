@@ -2,6 +2,8 @@ package com.dashmrl.autovm;
 
 import com.dashmrl.autovm.repo.BaseRepo;
 
+import javax.inject.Named;
+
 /**
  * Author       xinliu
  * Date         1/4/18
@@ -13,8 +15,8 @@ public class MainPresenter extends MainContract.BaseMainPresenter {
     private BaseRepo repo;
 
     @AutoVM(injectable = true, withType = true)
-    public MainPresenter(BaseRepo repo, BaseRepo repo2) {
-        this.repo = repo;
+    public MainPresenter(@Named("local") BaseRepo local,@Named("remote") BaseRepo remote) {
+        this.repo = local;
     }
 
     @Override

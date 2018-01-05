@@ -1,4 +1,4 @@
-package com.dashmrl.autovm;
+package com.dashmrl.autovm.repo;
 
 import com.dashmrl.autovm.repo.BaseRepo;
 
@@ -9,7 +9,7 @@ import com.dashmrl.autovm.repo.BaseRepo;
  * Email        xinliugm@gmail.com
  */
 
-class Repo extends BaseRepo {
+public class Repo extends BaseRepo {
     @Override
     public String loadMsg() {
         return null;

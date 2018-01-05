@@ -3,6 +3,9 @@ package com.dashmrl.autovm;
 import android.arch.lifecycle.ViewModelProviders;
 
 import com.dashmrl.autovm.repo.BaseRepo;
+import com.dashmrl.autovm.repo.Repo;
+
+import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
@@ -27,7 +30,14 @@ public class MainModule {
     }
 
     @Provides
-    public BaseRepo provideRepo() {
+    @Named("remote")
+    public BaseRepo provideRemoteRepo() {
+        return new Repo();
+    }
+
+    @Provides
+    @Named("local")
+    public BaseRepo provideLocalRepo() {
         return new Repo();
     }
 }
