@@ -10,24 +10,24 @@ AutoVM help us with creating Factory for each ViewModel's subclass (non-abstract
 ```java
 public class MainVM extends ViewModel{
     @AutoVM(injectable=true,withType=true)
-    public MainViewModel(BaseRepo repo){
+    public MainViewModel(@NonNull BaseRepo repo){
 //      ...        
     }
 }
 ```
-2. Press `Ctrl` + `F9` ,you will get `MainViewModel_AutoVM` :
+2. Press `Ctrl` + `F9` ,you will get `MainVM_AutoVM` :
 ```java
 public class MainVM_AutoVM extends ViewModelProvider.NewInstanceFactory {
   private BaseRepo repo;
 
   @Inject
-  public MainVM_AutoVM(BaseRepo repo) {
+  public MainVM_AutoVM(@NonNull BaseRepo repo) {
     this.repo = repo;
   }
 
   @NonNull
   @Override
-  public <T extends ViewModel> T create(Class<T> modelClass) {
+  public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
     if(modelClass.isAssignableFrom(com.dashmrl.autovm.MainVM.class)) {
       try {
         return modelClass.getConstructor(com.dashmrl.autovm.repo.BaseRepo.class).newInstance(repo);
@@ -68,8 +68,8 @@ allprojects {
 2. Add the dependency to your app module:
 ```groovy
 dependencies {
-    implementation 'com.github.dashMrl.AutoVM:autovm:v0.0.1'
-    annotationProcessor 'com.github.dashMrl.AutoVM:autovm-processor:v0.0.1'
+    implementation 'com.github.dashMrl.AutoVM:autovm:v0.0.2'
+    annotationProcessor 'com.github.dashMrl.AutoVM:autovm-processor:v0.0.2'
 }
 ```
 
@@ -77,6 +77,7 @@ dependencies {
 ## Note
 Need to pay attention to these:
 - your ViewModel should not be modified by abstract or private
+- only **one** constructor can be annotated
 - if Dagger2 is not implemented in your project,set `injectable` to `false`
 
 
