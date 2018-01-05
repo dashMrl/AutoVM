@@ -1,6 +1,7 @@
 package com.dashmrl.autovm;
 
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 
 import com.dashmrl.autovm.repo.BaseRepo;
 
@@ -12,7 +13,7 @@ import com.dashmrl.autovm.repo.BaseRepo;
  */
 
 public class MainVM extends ViewModel {
-    @AutoVM(injectable = true,withType = true)
-    public MainVM(BaseRepo repo) {
+    @AutoVM(injectable = true, withType = true)
+    public MainVM(@NonNull BaseRepo repo) {
     }
 }

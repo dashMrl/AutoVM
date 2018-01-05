@@ -1,5 +1,6 @@
 package com.dashmrl.autovm;
 
+import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
@@ -12,6 +13,7 @@ import com.squareup.javapoet.TypeVariableName;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
@@ -71,7 +73,11 @@ public class FactoryClass {
         }
         for (VariableElement variableElement : paramClasses) {
             String name = variableElement.toString();
-            constructorBuilder.addParameter(TypeName.get(variableElement.asType()), name);
+            List<AnnotationSpec> annotationSpecs = new ArrayList<>();
+            for (AnnotationMirror annotationMirror : variableElement.getAnnotationMirrors()) {
+                annotationSpecs.add(AnnotationSpec.get(annotationMirror));
+            }
+            constructorBuilder.addParameter(TypeName.get(variableElement.asType()).annotated(annotationSpecs), name);
             constructorBuilder.addStatement("this.$L = $L", name, name);
         }
         return constructorBuilder.build();
@@ -87,9 +93,11 @@ public class FactoryClass {
                 )
                 .returns(TypeVariableName.get("T"))
                 .addParameter(
-                        ParameterizedTypeName.get(
-                                ClassName.get(Class.class),
-                                TypeVariableName.get("T")),
+                        ParameterizedTypeName
+                                .get(
+                                        ClassName.get(Class.class),
+                                        TypeVariableName.get("T"))
+                                .annotated(AnnotationSpec.builder(ClassName.get(NonNull.packageName, NonNull.className)).build()),
                         "modelClass")
                 .beginControlFlow("if(modelClass.isAssignableFrom($L.class))", TypeName.get(typeElement.asType()).toString())
                 .beginControlFlow("try")
@@ -116,14 +124,14 @@ public class FactoryClass {
                 builder.add(",");
             }
         }
-                builder.add(").newInstance(");
+        builder.add(").newInstance(");
         for (int i = 0; i < size; i++) {
             builder.add(paramClasses.get(i).toString());
             if (i < size - 1) {
                 builder.add(",");
             }
         }
-                builder.add(");");
+        builder.add(");");
         builder.indent();
         return builder.build();
     }
