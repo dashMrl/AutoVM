@@ -9,8 +9,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/autovm" />
-            <option value="$PROJECT_DIR$/autovm-processor" />
+            <option value="$PROJECT_DIR$/vm" />
+            <option value="$PROJECT_DIR$/vm-processor" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

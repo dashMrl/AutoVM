@@ -2,17 +2,16 @@ def kotlin_version = '1.2.10'
 def anko_version = '0.10.2'
 def support_lib_version = '27.0.2'
 def arch_version = "1.0.0"
-def dagger_version = "2.13"
-def glide_version = "4.3.0"
+def dagger_version = "2.17"
 def mockito_version = "2.10.0"
 ext {
     android = [
-            compileSdkVersion         : 27,
-            buildToolsVersion         : '27.0.2',
+            compileSdkVersion         : 28,
+            buildToolsVersion         : '28.0.2',
             minSdkVersion             : 21,
-            targetSdkVersion          : 27,
+            targetSdkVersion          : 28,
             versionCode               : 1,
-            versionName               : '0.0.1',
+            versionName               : '0.0.3',
             targetCompatibilityVersion: JavaVersion.VERSION_1_8,
             sourceCompatibilityVersion: JavaVersion.VERSION_1_8
     ]

@@ -75,18 +75,21 @@ dependencies {
 
 
 ## Note
-Need to pay attention to these:
+Attentions:
 - your ViewModel should not be modified by abstract or private
 - only **one** constructor can be annotated
 - if Dagger2 is not implemented in your project,set `injectable` to `false`
 
+## TODOs
+- [ ] support for generic type
+- [ ] refactor with Javaassist or dynamic proxy
 
 ## License
 ```
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
-   Copyright 2017 xiansenLiu
+   Copyright 2018 dashMrl
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

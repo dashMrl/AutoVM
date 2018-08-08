@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion rootProject.android.compileSdkVersion
     defaultConfig {
-        applicationId "com.dashmrl.autovm"
+        applicationId "com.dashmrl.vmsample"
         minSdkVersion rootProject.android.minSdkVersion
         targetSdkVersion rootProject.android.targetSdkVersion
         versionCode rootProject.android.versionCode
@@ -27,11 +27,11 @@ dependencies {
     implementation deps.appcompat_v7
     implementation deps.design
     implementation deps.constraint_layout
-    api deps.lifecycle_exts
-    api deps.lifecycle_j8
-    api deps.dagger
-    compileOnly project(':autovm')
-    annotationProcessor project(':autovm-processor')
+    implementation deps.lifecycle_exts
+    implementation deps.lifecycle_j8
+    implementation deps.dagger
+    implementation project(':vm')
+    annotationProcessor project(':vm-processor')
     annotationProcessor deps.dagger_processor
     annotationProcessor deps.dagger_android_p
     testImplementation deps.junit
