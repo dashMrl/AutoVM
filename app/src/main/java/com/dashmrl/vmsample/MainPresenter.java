@@ -3,7 +3,7 @@ package com.dashmrl.vmsample;
 import com.dashmrl.vm.VM;
 import com.dashmrl.vmsample.repo.BaseRepo;
 
-import javax.inject.Named;
+import java.util.List;
 
 /**
  * Author       xinliu
@@ -13,11 +13,9 @@ import javax.inject.Named;
  */
 
 public class MainPresenter extends MainContract.BaseMainPresenter {
-    private BaseRepo repo;
 
-    @VM( withType = true)
-    public MainPresenter(@Named("local") BaseRepo local,@Named("remote") BaseRepo remote) {
-        this.repo = local;
+    @VM()
+    public MainPresenter(List<Holder<BaseRepo>> repos,BaseRepo repo)  {
     }
 
     @Override
@@ -26,5 +24,9 @@ public class MainPresenter extends MainContract.BaseMainPresenter {
         if (view != null) {
             view.onLoad("23333");
         }
+    }
+
+    public  static class Holder<T>{
+
     }
 }

@@ -13,6 +13,7 @@ import com.squareup.javapoet.TypeVariableName;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
@@ -54,11 +55,20 @@ public class FactoryClass {
         TypeSpec.Builder builder = creteTypeBuilder();
         builder.addMethod(createConstructor())
                 .addMethod(createCreate());
-        if (autoVM.withType()) {
-            builder.addMethod(createGetType());
-        }
+
         TypeSpec typeSpec = builder.build();
         return JavaFile.builder(packageElement.toString(), typeSpec).build();
+    }
+
+    private TypeSpec.Builder creteTypeBuilder() {
+        TypeSpec.Builder classBuilder =
+                TypeSpec.classBuilder(getTypeName(typeElement))
+                        .addModifiers(Modifier.PUBLIC)
+                        .superclass(TypeName.get(elementUtils.getTypeElement(Constants.ViewModelProvider_Factory.toString()).asType()));
+        for (VariableElement paramClass : paramClasses) {
+            classBuilder.addField(TypeName.get(paramClass.asType()), paramClass.toString(), Modifier.PRIVATE);
+        }
+        return classBuilder;
     }
 
     private MethodSpec createConstructor() {
@@ -108,11 +118,17 @@ public class FactoryClass {
 
     private CodeBlock generateCreateCode() {
         CodeBlock.Builder builder = CodeBlock.builder();
+
         builder.add("return modelClass.getConstructor(");
         int size = paramClasses.size();
         for (int i = 0; i < size; i++) {
             VariableElement param = paramClasses.get(i);
-            builder.add(TypeName.get(param.asType()).toString()).add(".class");
+            String s = TypeName.get(param.asType()).toString();
+            int indexOf = s.indexOf('<');
+            if (indexOf == -1) {
+                indexOf = s.length();
+            }
+            builder.add(s.substring(0, indexOf)).add(".class");
             if (i < size - 1) {
                 builder.add(",");
             }
@@ -127,30 +143,6 @@ public class FactoryClass {
         builder.add(");");
         builder.indent();
         return builder.build();
-    }
-
-    private MethodSpec createGetType() {
-
-        return MethodSpec.methodBuilder("getType")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(
-                        ParameterizedTypeName.get(
-                                ClassName.get(Class.class),
-                                TypeVariableName.get(typeElement.asType()))
-                )
-                .addStatement("return $L.class", TypeName.get(typeElement.asType()).toString())
-                .build();
-    }
-
-    private TypeSpec.Builder creteTypeBuilder() {
-        TypeSpec.Builder classBuilder =
-                TypeSpec.classBuilder(getTypeName(typeElement))
-                        .addModifiers(Modifier.PUBLIC)
-                        .superclass(TypeName.get(elementUtils.getTypeElement(Constants.ViewModelProvider_Factory.toString()).asType()));
-        for (VariableElement paramClass : paramClasses) {
-            classBuilder.addField(TypeName.get(paramClass.asType()), paramClass.toString(), Modifier.PRIVATE);
-        }
-        return classBuilder;
     }
 
 

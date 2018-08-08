@@ -7,6 +7,9 @@ import com.dashmrl.vm.VMFactory;
 import com.dashmrl.vmsample.repo.BaseRepo;
 import com.dashmrl.vmsample.repo.Repo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Named;
 
 import dagger.Module;
@@ -28,7 +31,9 @@ public class MainModule {
 
     @Provides
     public MainContract.BaseMainPresenter provideMainPresenter( @Named("local") BaseRepo local,@Named("remote") BaseRepo remote) {
-        ViewModelProvider.NewInstanceFactory factory = VMFactory.withvm(MainPresenter.class, local, remote);
+        List list = new ArrayList();
+        list.add(new MainPresenter.Holder<BaseRepo>());
+        ViewModelProvider.NewInstanceFactory factory = VMFactory.withvm(MainPresenter.class, list, remote);
         return ViewModelProviders.of(activity, factory).get(MainPresenter.class);
     }
 

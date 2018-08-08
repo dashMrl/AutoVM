@@ -31,6 +31,7 @@ dependencies {
     implementation deps.lifecycle_j8
     implementation deps.dagger
     implementation project(':vm')
+    compileOnly project(':vm-annotation')
     annotationProcessor project(':vm-processor')
     annotationProcessor deps.dagger_processor
     annotationProcessor deps.dagger_android_p

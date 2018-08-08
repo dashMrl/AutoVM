@@ -81,7 +81,7 @@ Attentions:
 - if Dagger2 is not implemented in your project,set `injectable` to `false`
 
 ## TODOs
-- [ ] support for generic type
+- [x] support for generic type
 - [ ] refactor with Javaassist or dynamic proxy
 
 ## License

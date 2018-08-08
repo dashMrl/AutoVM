@@ -1,1 +1,1 @@
-include ':app',  ':vm-processor', ':vm'
+include ':app',':vm',  ':vm-processor', ':vm-annotation'
