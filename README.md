@@ -1,4 +1,6 @@
 # AutoVM
+[![](https://jitpack.io/v/dashMrl/AutoVM.svg)](https://jitpack.io/#dashMrl/AutoVM)
+
 code generator for ViewModel of Android Architecture Components.
 
 AutoVM help us with creating Factory for each ViewModel's subclass (non-abstract and non-private)
@@ -51,10 +53,6 @@ public class MainVM_FACTORY extends ViewModelProvider.NewInstanceFactory {
   }
 ```
 
-As you can see,we got a custom subclass of  ViewModelProvider.NewInstanceFactory.
-What's more? The Constructor is annotated with `@Inject` and `getType()` method which returns the MainVM.class,
-If you don't need them , just set `injectable` or `withType` to `false`.
-
 3. Use it:
 ```java
 MainVM_FACTORY f = new MainVM_FACTORY(repo);
@@ -64,7 +62,7 @@ Then enjoy it!!
 
 ## How to integrate
 1. Add the JitPack repository to your build file Add it in your root build.gradle at the end of repositories:
-```
+```groovy
 allprojects {
     repositories {
         //...
