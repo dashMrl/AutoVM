@@ -1,10 +1,5 @@
 package com.dashmrl.vmsample;
 
-import com.dashmrl.vm.VM;
-import com.dashmrl.vmsample.repo.BaseRepo;
-
-import java.util.List;
-
 /**
  * Author       xinliu
  * Date         1/4/18
@@ -13,20 +8,17 @@ import java.util.List;
  */
 
 public class MainPresenter extends MainContract.BaseMainPresenter {
+    private String msg;
 
-    @VM()
-    public MainPresenter(List<Holder<BaseRepo>> repos,BaseRepo repo)  {
+    private MainPresenter(String msg)  {
+        this.msg = msg;
     }
 
     @Override
     public void loadMsg() {
         MainContract.MainView view = retrieveView();
         if (view != null) {
-            view.onLoad("23333");
+            view.onLoad(msg);
         }
-    }
-
-    public  static class Holder<T>{
-
     }
 }

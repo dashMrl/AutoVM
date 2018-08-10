@@ -29,12 +29,9 @@ dependencies {
     implementation deps.constraint_layout
     implementation deps.lifecycle_exts
     implementation deps.lifecycle_j8
-    implementation deps.dagger
     implementation project(':vm')
     compileOnly project(':vm-annotation')
     annotationProcessor project(':vm-processor')
-    annotationProcessor deps.dagger_processor
-    annotationProcessor deps.dagger_android_p
     testImplementation deps.junit
     androidTestImplementation deps.runner
     androidTestImplementation deps.espresso

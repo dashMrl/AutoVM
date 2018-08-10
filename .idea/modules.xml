@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/AutoVM.iml" filepath="$PROJECT_DIR$/.idea/AutoVM.iml" />
       <module fileurl="file://$PROJECT_DIR$/AutoVM.iml" filepath="$PROJECT_DIR$/AutoVM.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/autovm/autovm.iml" filepath="$PROJECT_DIR$/autovm/autovm.iml" />
-      <module fileurl="file://$PROJECT_DIR$/autovm-processor/autovm-processor.iml" filepath="$PROJECT_DIR$/autovm-processor/autovm-processor.iml" />
       <module fileurl="file://$PROJECT_DIR$/vm/vm.iml" filepath="$PROJECT_DIR$/vm/vm.iml" />
       <module fileurl="file://$PROJECT_DIR$/vm-annotation/vm-annotation.iml" filepath="$PROJECT_DIR$/vm-annotation/vm-annotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/vm-processor/vm-processor.iml" filepath="$PROJECT_DIR$/vm-processor/vm-processor.iml" />

@@ -4,24 +4,34 @@ code generator for ViewModel of Android Architecture Components.
 AutoVM help us with creating Factory for each ViewModel's subclass (non-abstract and non-private)
 
 
+## Convenient Api
+You can create an instance of your ViewModel with only one sentence:
+```java
+MainViewModel mvm = VMFactory.viewmodel(fragAct, MainViewModel.class, param0, param1);
+```
+This api is implemented with dynamic proxy, it will spend more generator Proxy class at runtime and
+finding a constructor to create an `ViewModel` instance for the first time, it will cache the
+constructors for incoming calls.
 
-## How to use
+> you should not provider a private constructor with zero argument
+
+## Generator Code with Annotation Processor
+If you can stand with lower performance with reflection/dynamic proxy, you can :
 1. Create your own ViewModel,like this:
 ```java
 public class MainVM extends ViewModel{
-    @AutoVM(injectable=true,withType=true)
+    @VM
     public MainViewModel(@NonNull BaseRepo repo){
 //      ...        
     }
 }
 ```
-2. Press `Ctrl` + `F9` ,you will get `MainVM_AutoVM` :
+2. Press `Ctrl/Cmd` + `F9` ,you will get `MainVM_FACTORY` :
 ```java
-public class MainVM_AutoVM extends ViewModelProvider.NewInstanceFactory {
+public class MainVM_FACTORY extends ViewModelProvider.NewInstanceFactory {
   private BaseRepo repo;
 
-  @Inject
-  public MainVM_AutoVM(@NonNull BaseRepo repo) {
+  public MainVM_FACTORY(@NonNull BaseRepo repo) {
     this.repo = repo;
   }
 
@@ -38,9 +48,6 @@ public class MainVM_AutoVM extends ViewModelProvider.NewInstanceFactory {
       return super.create(modelClass);
     }
 
-    public Class<MainVM> getType() {
-      return com.dashmrl.autovm.MainVM.class;
-    }
   }
 ```
 
@@ -50,7 +57,7 @@ If you don't need them , just set `injectable` or `withType` to `false`.
 
 3. Use it:
 ```java
-MainVM_AutoVM f = new MainVM_AutoVM(repo);
+MainVM_FACTORY f = new MainVM_FACTORY(repo);
 MainVM vm = ViewModelProviders.of(this,f).get(f.getType());
 ```
 Then enjoy it!!
@@ -66,23 +73,25 @@ allprojects {
 }
 ```
 2. Add the dependency to your app module:
+If you'd like the dynamic proxy way:
 ```groovy
 dependencies {
-    implementation 'com.github.dashMrl.AutoVM:autovm:v0.0.2'
-    annotationProcessor 'com.github.dashMrl.AutoVM:autovm-processor:v0.0.2'
+    implementation 'com.github.dashMrl.AutoVM:vm:v0.0.3'
 }
 ```
-
+or annotation processor:
+```groovy
+dependencies {
+    implementation 'com.github.dashMrl.AutoVM:vm-annotation:v0.0.3'
+    annotationProcessor 'com.github.dashMrl.AutoVM:vm-processor:v0.0.3'
+}
+```
 
 ## Note
 Attentions:
 - your ViewModel should not be modified by abstract or private
 - only **one** constructor can be annotated
 - if Dagger2 is not implemented in your project,set `injectable` to `false`
-
-## TODOs
-- [x] support for generic type
-- [ ] refactor with Javaassist or dynamic proxy
 
 ## License
 ```

@@ -15,7 +15,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    compileOptions {
+        targetCompatibility rootProject.android.targetCompatibilityVersion
+        sourceCompatibility rootProject.android.sourceCompatibilityVersion
+    }
 }
 
 dependencies {
