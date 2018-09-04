@@ -1,5 +1,7 @@
 package com.dashmrl.vmsample;
 
+import com.dashmrl.vm.VM;
+
 /**
  * Author       xinliu
  * Date         1/4/18
@@ -10,7 +12,8 @@ package com.dashmrl.vmsample;
 public class MainPresenter extends MainContract.BaseMainPresenter {
     private String msg;
 
-    private MainPresenter(String msg)  {
+    @VM
+    public MainPresenter(String msg) {
         this.msg = msg;
     }
 

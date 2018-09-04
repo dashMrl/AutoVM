@@ -11,7 +11,7 @@ ext {
             minSdkVersion             : 21,
             targetSdkVersion          : 28,
             versionCode               : 1,
-            versionName               : '0.0.3',
+            versionName               : '0.0.4',
             targetCompatibilityVersion: JavaVersion.VERSION_1_8,
             sourceCompatibilityVersion: JavaVersion.VERSION_1_8
     ]

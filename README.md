@@ -1,67 +1,50 @@
 # AutoVM
 [![](https://jitpack.io/v/dashMrl/AutoVM.svg)](https://jitpack.io/#dashMrl/AutoVM)
 
-code generator for ViewModel of Android Architecture Components.
+配合 Android jetpack `ViewModel` 使用的注解处理器，注解处理器会在编译期为 `ViewModel` 创建相应的
+辅助类帮助创建它的实例。
 
-AutoVM help us with creating Factory for each ViewModel's subclass (non-abstract and non-private)
 
+## 使用
 
-## Convenient Api
-You can create an instance of your ViewModel with only one sentence:
+1. 创建 ViewModel 子类
 ```java
-MainViewModel mvm = VMFactory.viewmodel(fragAct, MainViewModel.class, param0, param1);
-```
-This api is implemented with dynamic proxy, it will spend more generator Proxy class at runtime and
-finding a constructor to create an `ViewModel` instance for the first time, it will cache the
-constructors for incoming calls.
-
-> you should not provider a private constructor with zero argument
-
-## Generator Code with Annotation Processor
-If you can stand with lower performance with reflection/dynamic proxy, you can :
-1. Create your own ViewModel,like this:
-```java
-public class MainVM extends ViewModel{
+public class MainPresenter extends ViewModel{
     @VM
-    public MainViewModel(@NonNull BaseRepo repo){
+    public MainPresenter(String msg){
 //      ...        
     }
 }
 ```
-2. Press `Ctrl/Cmd` + `F9` ,you will get `MainVM_FACTORY` :
+2. 按 `Ctrl/Cmd` + `F9` 重新构建,得到 `MainPresenter$Creator`
 ```java
-public class MainVM_FACTORY extends ViewModelProvider.NewInstanceFactory {
-  private BaseRepo repo;
-
-  public MainVM_FACTORY(@NonNull BaseRepo repo) {
-    this.repo = repo;
-  }
-
-  @NonNull
-  @Override
-  public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-    if(modelClass.isAssignableFrom(com.dashmrl.autovm.MainVM.class)) {
-      try {
-        return modelClass.getConstructor(com.dashmrl.autovm.repo.BaseRepo.class).newInstance(repo);
-      } catch(Exception e) {
-          e.printStackTrace();
-        }
-      }
-      return super.create(modelClass);
+public class MainPresenter$Creator extends BaseCreator {
+    public MainPresenter$Creator() {
+        constructorParamTypess = new Class<?>[1][];
+        constructorParamTypess[0] = new Class<?>[]{java.lang.String.class};
     }
 
-  }
+    @Override
+    public MainPresenter create(Object[] params) {
+        int index = findMethodIndex(params);
+        switch (index) {
+            case 0: {
+                return new MainPresenter(((java.lang.String) params[0]));
+            }
+        }
+        return null;
+    }
+}
 ```
 
-3. Use it:
+3. 使用
 ```java
-MainVM_FACTORY f = new MainVM_FACTORY(repo);
-MainVM vm = ViewModelProviders.of(this,f).get(f.getType());
+MainPresenter presenter = VMCreator.viewModel(this, MainPresenter.class, "this is msg");
 ```
 Then enjoy it!!
 
-## How to integrate
-1. Add the JitPack repository to your build file Add it in your root build.gradle at the end of repositories:
+## 集成
+1. 添加 JitPack 仓库到项目根目录的 build.gradle
 ```groovy
 allprojects {
     repositories {
@@ -70,26 +53,25 @@ allprojects {
     }
 }
 ```
-2. Add the dependency to your app module:
-If you'd like the dynamic proxy way:
+2. 给 app module 添加依赖
 ```groovy
 dependencies {
-    implementation 'com.github.dashMrl.AutoVM:vm:v0.0.3'
-}
-```
-or annotation processor:
-```groovy
-dependencies {
-    implementation 'com.github.dashMrl.AutoVM:vm-annotation:v0.0.3'
-    annotationProcessor 'com.github.dashMrl.AutoVM:vm-processor:v0.0.3'
+    implementation 'com.github.dashMrl.AutoVM:vm:v0.0.4'
+    implementation 'com.github.dashMrl.AutoVM:vm-annotation:v0.0.4'
+    annotationProcessor 'com.github.dashMrl.AutoVM:vm-processor:v0.0.4'
 }
 ```
 
-## Note
-Attentions:
-- your ViewModel should not be modified by abstract or private
-- only **one** constructor can be annotated
-- if Dagger2 is not implemented in your project,set `injectable` to `false`
+## 注意
+- `VM` 注解只能用在非抽象类上
+- `private` 修饰的构造会使用反射创建实例，`public` 将直接通过 `new` 关键字创建
+- 基本类型会被当成包装类
+- 构造器只有一个数组参数时，使用 **二维数组** 避免可变参数的一些问题
+
+
+## TODOs
+-[ ] 只有一个构造器时性能提升
+-[ ] 去除 VMCreator 发射操作
 
 ## License
 ```

@@ -23,7 +23,7 @@ public abstract class BasePresenter<V> extends ViewModel implements LifecycleObs
 
     public void takeView(V v) {
         view.clear();
-        view = new WeakReference(v);
+        view = new WeakReference<>(v);
         if (v instanceof LifecycleOwner) {
             takeLifecycle(((LifecycleOwner) v));
         }
@@ -83,9 +83,7 @@ public abstract class BasePresenter<V> extends ViewModel implements LifecycleObs
 
     @CallSuper
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    protected void
-
-    onDestroy() {
+    protected void onDestroy() {
         dropView();
     }
 

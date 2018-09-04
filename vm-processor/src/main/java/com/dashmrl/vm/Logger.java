@@ -1,4 +1,4 @@
-package com.dashmrl.vmprocessor;
+package com.dashmrl.vm;
 
 import javax.annotation.processing.Messager;
 import javax.lang.model.element.AnnotationMirror;

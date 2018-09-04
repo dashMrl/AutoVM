@@ -1,4 +1,4 @@
-package com.dashmrl.vmprocessor;
+package com.dashmrl.vm;
 
 /**
  * Author       xinliu
@@ -8,10 +8,14 @@ package com.dashmrl.vmprocessor;
  */
 
 public interface Constants {
-
-    Clazz ViewModel = new Clazz("android.arch.lifecycle", "ViewModel");
+    Clazz BaseCreator = new Clazz("com.dashmrl.vm", "BaseCreator");
     Clazz NonNull = new Clazz("android.support.annotation", "NonNull");
-    Clazz ViewModelProvider_Factory = new Clazz("android.arch.lifecycle", "ViewModelProvider.NewInstanceFactory");
+    Clazz Activity = new Clazz("android.support.v4.app", "FragmentActivity");
+    Clazz Fragment = new Clazz("android.support.v4.app", "Fragment");
+    Clazz ViewModel = new Clazz("android.arch.lifecycle", "ViewModel");
+    Clazz ViewModelProvider = new Clazz("android.arch.lifecycle", "ViewModelProvider");
+    Clazz ViewModelProvider_Factory = new Clazz("android.arch.lifecycle", "ViewModelProvider.Factory");
+    Clazz ViewModelProviders = new Clazz("android.arch.lifecycle", "ViewModelProviders");
 
     class Clazz {
         public final String packageName;
