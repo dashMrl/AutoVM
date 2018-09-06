@@ -62,6 +62,16 @@ dependencies {
 }
 ```
 
+## Proguard
+```
+-keepnames class * extends android.arch.lifecycle.ViewModel{
+    <init>(...);
+}
+-keep class * extends com.dashmrl.vm.BaseCreator{
+    <init>(...);
+}
+```
+
 ## 注意
 - `VM` 注解只能用在非抽象类上
 - `private` 修饰的构造会使用反射创建实例，`public` 将直接通过 `new` 关键字创建
